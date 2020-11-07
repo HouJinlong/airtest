@@ -30,6 +30,7 @@
 
 ## 目录概述
 
+```
 .
 ├── 1.0
 │   └── 端上自动化监控系统1.0.pptx 
@@ -41,7 +42,7 @@
 │   ├── auto_test_client django 写的 python web 项目，电脑与手机建立tcpip链接和手机产看当前的链接状态
 │   ├── auto_test_script 控制自动化脚本的运行
 └── fedev 后端egg项目，其中airtest是自动化测试的
-
+```
 
 ## 学习到的知识
 
