@@ -35,13 +35,13 @@
 ├── 1.0
 │   └── 端上自动化监控系统1.0.pptx 
 ├── README.md
-├── airs  自动化测试脚本
-│   └── airtest-demo 测试自动化测试脚本项目
-├── auto_test_admin  自动化测试的前端项目，配置脚本，产看设备，运行任务，产看报告
-├── auto_test_client 自动化测试脚本的运行项目
-│   ├── auto_test_client django 写的 python web 项目，电脑与手机建立tcpip链接和手机产看当前的链接状态
-│   ├── auto_test_script 控制自动化脚本的运行
-└── fedev 后端egg项目，其中airtest是自动化测试的
+├── airs                                    自动化测试脚本
+│   └── airtest-demo                        测试自动化测试脚本项目
+├── auto_test_admin                         自动化测试的前端项目，配置脚本，产看设备，运行任务，产看报告
+├── auto_test_client                        自动化测试脚本的运行项目
+│   ├── auto_test_client                    django 写的 python web 项目，电脑与手机建立tcpip链接和手机产看当前的链接状态
+│   ├── auto_test_script                    python对airtest脚本执行器自定义，控制自动化脚本的运行
+└── fedev                                   后端egg项目，其中airtest是自动化测试的
 ```
 
 ## 学习到的知识
