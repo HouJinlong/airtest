@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自动化测试-客户端</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        body{
+            background-image: url('http://zhongguose.com/img/texture.png');
+            background-color:rgb(86, 152, 195);
+            height: 100vh;
+        }
+        .content{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%);
+            transform-origin: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .7);
+            font-size: 20px;
+            color: rgb(86, 152, 195);
+            text-align: center;
+            line-height: 100px;
+            cursor: pointer;
+        }
+        .content:hover{
+            background: rgba(255, 255, 255, .8);
+        }
+        table{
+            width: 100%;
+            margin-top: 100px;
+            border:0;
+        }
+        table td{
+            padding:10px 5px;
+            color: #fff;
+            text-align: center;
+            width: 50%;
+            text-align: left;
+        }
+        table td:first-of-type{
+            text-align: right;
+        }
+        table td:last-of-type{
+            text-align: left;
+        }
+        .discontent{
+            margin-top: 50px;
+            font-size: 18px;
+            color: rgb(86, 152, 195);
+            width: 140px;
+            height: 40px;
+            margin: 0 auto;
+            border-radius: 4px;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, .9);
+        }
+        .discontent:hover{
+            background: rgba(255, 255, 255, .8);
+        }
+    </style>
+</head>
+<body>
+    <div id="app" style="opacity: 0;">
+        <div v-if="device.id">
+            <table>
+                <tr>
+                    <td>id</td>
+                    <td> {[device.id]}</td>
+                </tr>
+                <tr>
+                    <td>model</td>
+                    <td> {[device.model]}</td>
+                </tr>
+                <tr>
+                    <td>manufacturer</td>
+                    <td> {[device.manufacturer]}</td>
+                </tr>
+                <tr>
+                    <td>platform</td>
+                    <td> {[device.platform]}</td>
+                </tr>
+                <tr>
+                    <td>ip</td>
+                    <td> {[device.ip]}</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div @click="discontent" class="discontent">
+                            <span v-if="loading">
+                                断开中...
+                            </span>
+                            <span v-else>
+                                断开连接
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div v-else>
+            <div  @click="content" class="content">
+                <span v-if="loading">
+                    连接中...
+                </span>
+                <span v-else>
+                    连接
+                </span>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        var  device = {{device | safe }}
+        new Vue({
+            delimiters:["{[", "]}"],
+            el:'#app',
+            data:{
+                loading:false,
+                device:device,
+                msg:''
+            },
+            mounted:function(){
+                this.$el.style.opacity = 1;
+            },
+            methods:{
+                content:function(){
+                    if(this.loading)return;
+                    this.loading = true;
+                    var _self = this
+                    axios.get('/connect_device').then(function (res) {
+                        var data = res.data
+                        if(data.code==0){
+                            _self.device = data.data
+                        }else{
+                            alert(data.msg)
+                            _self.device = {}
+                        }
+                        _self.loading = false;
+                    });
+                },
+                discontent:function(){
+                    if(this.loading)return;
+                    this.loading = true;
+                    var _self = this
+                    axios.get('/disconnect_device',{
+                        params:{
+                            id:_self.device.id
+                        }
+                    }).then(function (res) {
+                        var data = res.data
+                        if(data.code==0){
+                            _self.device = {}
+                        }else{
+                            alert(data.msg)
+                        }
+                        _self.loading = false;
+                    });
+                }
+            }
+        })
+     </script>
+</body>
+</html>

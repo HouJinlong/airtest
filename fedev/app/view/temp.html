@@ -1,0 +1,195 @@
+{% macro head(title='') %}
+<title>{{title}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/public/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/public/css/bootstrap-table.min.css" />
+<link href="https://cdn.bootcss.com/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<style>
+
+    #canvasBox{
+      position: fixed;top:0;left: 0;right: 0;bottom: 0;
+      background-image: linear-gradient(to bottom, #517fa4 0%, #243949 100%);
+      overflow: hidden;
+      z-index: -1;
+    }
+    .navbar{
+        background-color: #2a6491;
+        border-bottom: 1px solid #2a6491;
+    }
+    .navbar a{
+        color: #fff;
+    }
+    .nav>li>a:focus, .nav>li>a:hover{
+        background-color: #3375a8;
+    }
+    .ellipsis{
+        text-overflow: ellipsis;
+        word-break: break-all;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    .row.p10{
+        margin: 0 -10px;
+    }
+    .row.p10>div{
+        padding:0 5px;
+    }
+</style>
+{% endmacro %}
+
+{% macro header() %}
+<header class="navbar navbar-static-top" id="top" >
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">平台前端数据聚合</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/sentry">全部</a></li>
+            <li>
+                    <a href="/sentry/report">一周错误报告</a></li>
+            <li>
+                <a href="/sentry/projects">项目列表</a></li>
+            <li>
+                <a href="/sentry/configuration" >配置</a></li>
+        </ul>
+    </div>
+</header>
+{% endmacro %}
+
+{% macro perfHeader() %}
+<header class="navbar navbar-static-top" id="top" >
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">平台前端数据聚合</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+                <li>
+                        <a href="/perf/?pKey=catg">首页</a></li>
+            <li>
+                <a href="/perf/report">一周性能报告</a></li>
+            <li>
+                <a href="/perf/page_by_date/?pKey=catg" >页面性能详情</a></li>
+
+        </ul>
+    </div>
+</header>
+{% endmacro %}
+
+{% macro airtestHeader(client='app') %}
+<header class="navbar navbar-static-top" id="top" >
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">平台前端数据聚合</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/airtest?client={{client}}">脚本列表</a></li>
+            <li>
+                <a href="/airtest/tasks?client={{client}}">任务列表</a>
+            </li>
+        </ul>
+    </div>
+</header>
+{% endmacro %}
+
+{% macro tradeMonitorHeader(client='app') %}
+<header class="navbar navbar-static-top" id="top" >
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">平台前端数据聚合</a>
+        </div>
+    </div>
+</header>
+{% endmacro %}
+
+{% macro msg() %}
+<!-- 提示 -->
+<div class="modal fade" tabindex="-1" role="dialog" id="msg">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">提示</h4>
+        </div>
+        <div class="modal-body">
+            <p class="msg-text"></p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+        </div>
+        </div>
+    </div>
+</div>
+<script>
+     // 展示提示
+     function showMsg(text){
+       setTimeout(() => {
+            $('#msg').modal('show').find('.msg-text').html(text);
+       }, 350);
+
+     }
+</script>
+{% endmacro %}
+
+{% macro publicJs() %}
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/bootstrap-table.min.js"></script>
+<script src="/public/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/public/js/particle-bg.umd.min.js"></script>
+<div  id="canvasBox"></div>
+<script>
+  particleBg('#canvasBox', {
+    color: 'rgba(255, 255, 255, 0.5)'
+  });
+  function setUrlParam(param, value) {
+    // debugger
+    let query = location.search.substring(1)
+    let p = new RegExp("(^|)" + param + "=([^&]*)(|$)")
+    let _params
+    if (p.test(query)) {
+        //query = query.replace(p,"$1="+value)
+        let firstParam = query.split(param)[0]
+        let secondParam = query.split(param)[1]
+        if (secondParam.indexOf("&") > -1) {
+            let lastPraam = secondParam.split("&")
+            lastPraam.shift()
+            lastPraam = lastPraam.join('&')
+            _params = '?' + firstParam + param + '=' + value + '&' + lastPraam
+        } else {
+            if (firstParam) {
+                _params = '?' + firstParam + param + '=' + value
+            } else {
+                _params = '?' + param + '=' + value
+            }
+        }
+    } else {
+        if (query == '') {
+            _params = '?' + param + '=' + value
+        } else {
+            _params = '?' + query + '&' + param + '=' + value
+        }
+    }
+
+    return location.href.split('?')[0] + _params
+};
+</script>
+{% endmacro %}
+{% macro perfPublicJs() %}
+<script src="/public/js/jquery.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/bootstrap-table.min.js"></script>
+<script src="/public/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="/public/js/bootstrap-datepicker.min.js"></script>
+<script src="/public/js/bootstrap-datepicker.zh-CN.min.js"></script>
+<script src="/public/js/echarts.4.2.1.min.js"></script>
+<script src="/public/js/perf.js"></script>
+<script src="/public/js/particle-bg.umd.min.js"></script>
+<div id="canvasBox"></div>
+<script>
+  particleBg('#canvasBox', {
+    color: 'rgba(255, 255, 255, 0.5)'
+  });
+</script>
+{% endmacro %}

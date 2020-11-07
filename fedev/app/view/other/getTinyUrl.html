@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>58到家-短链生成工具</title>
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            padding-top:50px ;
+        }
+        .wrap{
+            background-color: #fff;
+            border-radius: 4px 4px 0 0;
+            width: 500px;
+            margin: 0 auto 15px;
+            border: 1px solid #ddd;
+            padding: 15px 15px 0px 15px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        label {
+            display: inline-block;
+            max-width: 100%;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+        .form-control {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        }
+        .btn {
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+        .btn-default {
+            color: #333;
+            background-color: #fff;
+            border-color: #ccc;
+        }
+        .btn-default:hover{
+            background-color: #d4d4d4;
+            border-color: #8c8c8c;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+        .form-control-static {
+            min-height: 34px;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            margin-bottom: 0;
+        }
+        .form-control-static a{
+            word-break: break-all;
+            font-size: 14px;
+        }
+        .tips{
+            margin: 20px auto;
+            width: 400px;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="tips">短信推广app短链工具 <a href="http://confluence.daojia-inc.com/pages/viewpage.action?pageId=101042700">使用说明</a></h2>
+    <div class="wrap">
+        <div class="form-group">
+            <label for="bu">bu</label>
+            <select name="bu" class="form-control">
+                <option value="112">112</option>
+                <option value="101">101</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="url">落地页</label>
+            <input type="text" autocomplete="off"  name="url" class="inp form-control" placeholder="请输入落地页地址">
+        </div>
+        <div class="form-group">
+            <label for="hmsr">hmsr</label>
+            <input type="text" autocomplete="off"  name="hmsr" class="inp form-control" placeholder="请输入hmsr">
+        </div>
+        <div class="form-group">
+            <label for="params">其他参数</label>
+            <input type="text" autocomplete="off" value="showh5appdb=true" name="params" class="inp form-control" placeholder="例如:">
+        </div>
+    </div>
+    <!-- 预览 -->
+    <div class="wrap" id="preview" style="display: none;">
+        <label for="params">地址预览</label>
+        <div class="form-group" style="overflow: hidden;">
+            <div class="form-control-static" style="width: 60%; margin-right: 10%; float: left;">
+                <a href="" target="_blank"></a>
+            </div>
+            <button class="btn btn-default" style="width: 30%; float: left;" id="get">生成</button>
+        </div>
+    </div>
+    <!-- 短链 -->
+    <div class="wrap" id="result"  style="display: none;">
+        <div class="form-group"  style="overflow: hidden;">
+            <input type="text" style="display:block;border:0;width: 60%; margin-right: 10%; float: left;" class="form-control">
+            <button class="btn btn-default" style="width: 30%; float: left;" id="copy">复制</button>
+        </div>
+    </div>
+    <!-- 提示 -->
+    <div class="wrap" id="msg"  style="display: none;">
+        <div class="form-group" style="text-align: center;">
+                生成中...
+        </div>
+    </div>
+    <script src="/public/js/jquery.min.js"></script>
+
+    <script>
+        $(function(){
+            function GetRequest(str) {
+                var theRequest = new Object();
+                var strs = str.split("&");
+                for(var i = 0; i < strs.length; i ++) {
+                    theRequest[strs[i].split("=")[0]]=encodeURIComponent(unescape(strs[i].split("=")[1]));
+                }
+                return theRequest;
+            }
+            $('.inp').on('input',function(){
+                $('#msg').hide()
+                $('#result').hide()
+                var preview_url = '';
+                var url = $('[name="url"]').val().trim()
+                if(url){
+                    var url_arr = url.split('?');
+                    var query = {}
+                    if(url_arr[1]){
+                        query = GetRequest(url_arr[1])
+                    }
+                    var params = $('[name="params"]').val().trim();
+                    if(params){
+                        query =  Object.assign({},query,GetRequest(params))
+                    }
+                    var hmsr = $('[name="hmsr"]').val().trim();
+                    if(hmsr){
+                        query['hmsr'] = hmsr
+                    }
+                    preview_url = url_arr[0]
+                    var query_str = []
+                    for(x in query){
+                        if(query[x].length&&query[x]!='undefined'){
+                            query_str.push(x+'='+query[x]);
+                        }
+                    }
+                    if(query_str.length){
+                        preview_url +='?'+query_str.join('&')
+                    }
+                }
+                if(preview_url!=''){
+                    $('#preview a').html(preview_url).attr('href',preview_url);
+                    $('#preview').show();
+                }else{
+                    $('#preview').hide();
+                }
+            })
+            // 生成
+            $('#get').on('click',function(){
+                $('#preview').hide();
+                $('#msg').show()
+                $('#msg .form-group').html('加载中...')
+                $.post('/other/api/getTinyUrl',{
+                    longUrl:$('#preview a').attr('href'),
+                    bussinessId:$('[name="bu"]').val(),
+                },function(res){
+                    if(res.code==0){
+                        $('#msg').hide()
+                        $('#result a').html(res.data).attr('href',res.data);
+                        $('#result input').val(res.data)
+                        $('#result').show();
+                    }else{
+                        $('#msg .form-group').html(res.message)
+                    }
+                })
+            })
+            // 拷贝
+            $('#copy').on('click',function(){
+                $('#result input')[0].select()
+                document.execCommand("copy");
+                $('#msg').show()
+                $('#msg .form-group').html('复制成功')
+            })
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "fedev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "egg-bin dev --port 17001",
+    "start": "egg-scripts start --daemon --port=17001 --stdout=./logs/master-stdout.log --stderr=./logs/master-stderr.log",
+    "stop": "egg-scripts stop"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "compressing": "^1.4.0",
+    "egg": "^2.22.2",
+    "egg-cors": "^2.2.0",
+    "egg-mongoose": "^3.2.0",
+    "egg-scripts": "^2.11.0",
+    "egg-view-nunjucks": "^2.2.0",
+    "nodemailer": "^1.2.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "silly-datetime": "^0.1.2"
+  },
+  "devDependencies": {
+    "egg-bin": "^4.13.1",
+    "eslint": "^6.6.0",
+    "eslint-config-egg": "^7.5.1"
+  }
+}

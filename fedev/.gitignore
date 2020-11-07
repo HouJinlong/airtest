@@ -1,0 +1,10 @@
+node_modules/
+run/
+.idea
+.DS_Store
+project.config.json
+npm-debug.log
+.vscode
+logs
+airtest_log
+
