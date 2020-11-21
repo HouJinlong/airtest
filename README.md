@@ -1,6 +1,8 @@
 # 端上自动化监控系统2.0
 
-![imagediff](https://img.shields.io/badge/imagediff-v1.0.8-blue) ![airtest](https://airtest.netease.com/)
+imagediff: https://www.npmjs.com/package/imagediff
+
+airtest: https://airtest.netease.com/
 
 ## 概述
 
