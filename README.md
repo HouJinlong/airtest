@@ -1,5 +1,7 @@
 # 端上自动化监控系统2.0
 
+![imagediff](https://img.shields.io/badge/imagediff-v1.0.8-blue) ![airtest](https://airtest.netease.com/)
+
 ## 概述
 
 [端上自动化监控系统1.0](https://www.yuque.com/office/yuque/0/2020/pptx/1347081/1605783551970-1fcda486-c215-4e7e-9ac7-98cfdcd01ead.pptx) 
