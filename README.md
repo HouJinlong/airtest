@@ -8,7 +8,7 @@ airtest: https://airtest.netease.com/
 
 [端上自动化监控系统1.0](https://www.yuque.com/office/yuque/0/2020/pptx/1347081/1605783551970-1fcda486-c215-4e7e-9ac7-98cfdcd01ead.pptx) 
 
-> 通过脚本模拟认为操作，使用产品，并进行截图与基准运行截图进行对比，当脚本运行失败或者图片对比差异超过允许范围进行邮件提醒
+> 通过脚本模拟人为操作，使用产品，并进行截图与基准运行截图进行对比，当脚本运行失败或者图片对比差异超过允许范围进行邮件提醒
 
 背景：项目迭代，优化，bug修复等QA同事任务多排期紧以及回归测试无法完全覆盖
 目标：通过技术手段降低成本，增加开发效率，更好的支持业务迭代，保证产出质量
@@ -66,4 +66,9 @@ airtest: https://airtest.netease.com/
 > 今天联调闲余时间刷刷技术文章，在 携程技术 公众号，看到了有类似理念的实现
 
 [携程APP/Web功能和视觉测试平台-Watcher](https://mp.weixin.qq.com/s/7wJDGMunnzl8rCl9nZfahA)
+
+## Sonic 开源云真机测试平台
+https://www.jianshu.com/p/030cb796aaad
+https://github.com/SonicCloudOrg
+
 
